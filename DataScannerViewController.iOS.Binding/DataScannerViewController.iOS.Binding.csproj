@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-ios</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <IsBindingProject>true</IsBindingProject>
+
+    <!--
+      Enable trim analyzers for class libraries.
+      To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming
+    -->
+    <IsTrimmable>true</IsTrimmable>
+
+    <PackageId>DataScannerViewController.Ios.Maui</PackageId>
+    <Title>Barcode Scanner MAUI binding</Title>
+    <Authors>dadude999</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>The C# version of the iOS barcode scanner API</Description>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <RepositoryUrl>https://github.com/dadude999/DataScannerViewController-MAUI</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+
+  <!-- Reference to Xcode project -->
+  <ItemGroup>
+    <NLIXcodeProjectReference Include="../native_iOS/DataScannerViewControllerWrapper/DataScannerViewControllerWrapper.xcodeproj">
+      <SchemeName>DataScannerViewControllerWrapper</SchemeName>
+      <SharpieNamespace>DataScannerViewControlleriOS</SharpieNamespace>
+      <SharpieBind>true</SharpieBind>
+      <!-- Metadata applicable to @(NativeReference) will be used if set, otherwise the following defaults will be used:
+      <Kind>Framework</Kind>
+      <SmartLink>true</SmartLink>
+      -->
+    </NLIXcodeProjectReference>
+  </ItemGroup>
+
+  <!-- Reference to NuGet for building bindings -->
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui.NativeLibraryInterop.BuildTasks" Version="0.0.1-pre1" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+</Project>
+
