@@ -16,6 +16,10 @@ namespace DataScannerViewControlleriOS
 		[Export ("setScanCallbackWithCallback:")]
 		void SetScanCallbackWithCallback (Action<string []> callback);
 
+		// -(void)setScanUpdatedCallbackWithCallback:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))callback;
+		[Export ("setScanUpdatedCallbackWithCallback:")]
+		void SetScanUpdatedCallbackWithCallback (Action<string []> callback);
+
 		// -(void)startScan;
 		[Export ("startScan")]
 		void StartScan ();

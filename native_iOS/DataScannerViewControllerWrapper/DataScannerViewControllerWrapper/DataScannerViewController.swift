@@ -6,6 +6,7 @@ public class ScanControllerWrapper : NSObject, DataScannerViewControllerDelegate
 {
     private var viewController: DataScannerViewController
     private var scannerCallback: ((_ codes: [String]) -> Void)? = nil
+    private var scannerUpdateCallback: ((_ codes: [String]) -> Void)? = nil
 
     @objc
     @MainActor override init()
@@ -22,14 +23,14 @@ public class ScanControllerWrapper : NSObject, DataScannerViewControllerDelegate
     @objc
     public func getViewController() -> UIViewController
     {
-        return self.viewController;
+        return self.viewController
     }
 
-    public func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem])
+    private func handleBarcodeCallback(barcodes: [RecognizedItem], callback: ((_ codes: [String]) -> Void)?)
     {
-        if(self.scannerCallback != nil)
+        if(callback != nil)
         {
-            let scannedBarcodes: [String] = addedItems.map
+            let scannedBarcodes: [String] = barcodes.map
             { (item) -> String in
                 switch(item)
                 {
@@ -38,15 +39,31 @@ public class ScanControllerWrapper : NSObject, DataScannerViewControllerDelegate
                     default:
                         return "<not a barcode>"
                 }
-            };
-            self.scannerCallback!(scannedBarcodes)
+            }
+            callback!(scannedBarcodes)
         }
+    }
+
+    public func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem])
+    {
+        handleBarcodeCallback(barcodes: addedItems, callback: self.scannerCallback)
+    }
+
+    public func dataScanner(_ dataScanner: DataScannerViewController, didUpdate updatedItems: [RecognizedItem], allItems: [RecognizedItem])
+    {
+        handleBarcodeCallback(barcodes: updatedItems, callback: self.scannerUpdateCallback)
     }
 
     @objc
     @MainActor public func setScanCallback(callback: @escaping ([String]) -> Void)
     {
         self.scannerCallback = callback
+    }
+
+    @objc
+    @MainActor public func setScanUpdatedCallback(callback: @escaping ([String]) -> Void)
+    {
+        self.scannerUpdateCallback = callback
     }
 
     @objc

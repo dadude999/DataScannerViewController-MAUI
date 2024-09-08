@@ -19,7 +19,7 @@
     <EnablePackageValidation>true</EnablePackageValidation>
     <RepositoryUrl>https://github.com/dadude999/DataScannerViewController-MAUI</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
